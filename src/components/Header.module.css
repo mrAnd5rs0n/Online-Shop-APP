@@ -1,0 +1,59 @@
+.main {
+  color: white;
+  top: 0;
+  left: 0;
+
+
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: space-between;
+  
+  flex: 1;
+
+  flex-wrap:nowrap;
+  border-bottom: 0;
+}
+
+.logo {
+  font-family: 'Red Hat Text', sans-serif;
+  color: white;
+}
+.nav li {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding-right: 5 px;
+  margin-right: 20px;
+  text-align: right;
+}
+a {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.maintext {
+  display: flex;
+  flex:1;
+  flex-wrap: nowrap;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  padding: 1rem 33rem;
+  padding-bottom: 6rem;
+}
+
+.login {
+  background: rgb(250, 102, 127);
+  border: rgb(207, 81, 102) solid 2px;
+  padding: 0.7rem 1.3rem;
+  border-radius: 1rem;
+}
+
