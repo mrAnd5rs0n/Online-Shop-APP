@@ -1,97 +1,28 @@
 import classes from './Form.module.css';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import FilterItem from './FilterItem';
 import ClothesContext from '../store/clothes-context';
 import Products from './Products';
-
-const DUMMY_DATA = [
-  {
-    id: '1',
-    gender: 'Male',
-    mark: 'Nike',
-    item: 'Sneakers',
-    value: 94.12,
-  },
-  { id: '2', gender: 'Female', mark: 'Adidas', item: 'Socks', value: 5.49 },
-  {
-    id: '3',
-    gender: 'Male',
-    mark: 'Puma',
-    item: 'T-Shirt',
-    value: 54.67,
-  },
-  {
-    id: '4',
-    gender: 'Female',
-    mark: 'Reebok',
-    item: 'Trousers',
-    value: 75.0,
-  },
-  {
-    id: '5',
-    gender: 'Female',
-    mark: 'Puma',
-    item: 'T-Shirt',
-    value: 124.67,
-  },
-  {
-    id: '6',
-    gender: 'Male',
-    mark: 'Reebok',
-    item: 'Jacket',
-    value: 55.0,
-  },
-  {
-    id: '7',
-    gender: 'Female',
-    mark: 'Puma',
-    item: 'Dress',
-    value: 164.67,
-  },
-  {
-    id: '8',
-    gender: 'Male',
-    mark: 'Reebok',
-    item: 'Jeans',
-    value: 275.0,
-  },
-  {
-    id: '9',
-    gender: 'Female',
-    mark: 'Puma',
-    item: 'Jacket',
-    value: 64.67,
-  },
-  {
-    id: '10',
-    gender: 'Male',
-    mark: 'Reebok',
-    item: 'T-Shirt',
-    value: 225.0,
-  },
-  {
-    id: '11',
-    gender: 'Female',
-    mark: 'Puma',
-    item: 'Sneakers',
-    value: 64.67,
-  },
-  {
-    id: '12',
-    gender: 'Male',
-    mark: 'Reebok',
-    item: 'Trousers',
-    value: 145.0,
-  },
-];
+import { getDataAPI, getCompaniesAPI } from '../services/data.js';
 
 const Form = props => {
-  const [filteredExpenses, setFilteredExpenses] = useState(DUMMY_DATA);
-  const { filters, setFilter } = useContext(ClothesContext);
+  const [data, setData] = useState([]);
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-    let expenses = DUMMY_DATA;
+    getDataAPI().then(response => setData(response));
+  }, []);
 
+  useEffect(() => {
+    getCompaniesAPI().then(response => setCompanies(response));
+  }, []);
+
+  const [filteredExpenses, setFilteredExpenses] = useState(data);
+  const { filters, setFilter } = useContext(ClothesContext);
+
+  let expenses = data;
+
+  useEffect(() => {
     if (filters['gender'] !== '')
       expenses = expenses.filter(
         expense => expense.gender === filters['gender']
@@ -111,7 +42,7 @@ const Form = props => {
       );
 
     setFilteredExpenses(expenses);
-  }, [filters]);
+  }, [expenses, filters]);
 
   const changeHandlerMark = event => {
     setFilter('mark', event.target.value);
@@ -124,6 +55,13 @@ const Form = props => {
   const changeHandlerValue = event => {
     setFilter('value', event.target.value);
   };
+  const options = companies.map((company, index) => {
+    return {
+      label: company.name,
+      value: company.name,
+      key: company.id,
+    };
+  });
 
   return (
     <div>
@@ -147,18 +85,20 @@ const Form = props => {
               </button>
             </div>
             <select onChange={changeHandlerMark}>
-              <option value="Nike">Nike</option>
-              <option value="Reebok">Reebok</option>
-              <option value="Adidas">Adidas</option>
-              <option value="Puma">Puma</option>
+              {companies.map(item => {
+                return (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                );
+              })}
             </select>
             <select onChange={changeHandlerItem}>
-              <option value="T-Shirt">T-Shirt</option>
-              <option value="Trousers">Trousers</option>
-              <option value="Jeans">Jeans</option>
-              <option value="Sneakers">Sneakers</option>
-              <option value="Dress">Dress</option>
-              <option value="Jacket">Jacket</option>
+              {data.map(item => (
+                <option key={item.id} value={item.item}>
+                  {item.item}
+                </option>
+              ))}
             </select>
             <select onChange={changeHandlerValue}>
               <option value="50-100">50 KM - 100 KM</option>
@@ -193,3 +133,4 @@ const Form = props => {
 };
 
 export default Form;
+
