@@ -1,11 +1,6 @@
 import ClothesContext from './clothes-context';
 import { useState } from 'react';
 
-const defaultClothesContext = {
-  filters: {},
-  setFilter: (key, value) => {},
-  removeFilter: key => {},
-};
 
 const ClothesProvider = props => {
   const [filters, setFilters] = useState({
