@@ -1,3 +1,33 @@
+export function getItemAPI() {
+  const items = [
+    {
+      id: '1',
+      item: 'Sneakers',
+    },
+    {
+      id: '2',
+      item: 'T-Shirt',
+    },
+    {
+      id: '3',
+      item: 'Trousers',
+    },
+    {
+      id: '4',
+      item: 'Jacket',
+    },
+    {
+      id: '5',
+      item: 'Jeans',
+    },
+    {
+      id: '6',
+      item: 'Dress',
+    },
+  ];
+  return new Promise(resolve => setTimeout(resolve(items), 2000));
+}
+
 export function getDataAPI(){
  
     const data = [
@@ -109,16 +139,3 @@ export function getCompaniesAPI(){
 }
  
  
-export function getProductsPerCompanyAPI(companyId){
-     const products = []
-    let a = [...new Array(10)]
-    a.forEach((el, i) => {
-        products.push({
-            id: i,
-            name: `Product ${i} for company ${companyId}`
-        })
-    })
- 
- 
-    return new Promise((resolve) => setTimeout(resolve(products), 2000))
-}
