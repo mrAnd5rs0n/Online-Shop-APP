@@ -1,13 +1,14 @@
 import classes from './Form.module.css';
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import FilterItem from './FilterItem';
 import ClothesContext from '../store/clothes-context';
 import Products from './Products';
-import { getDataAPI, getCompaniesAPI } from '../services/data.js';
+import { getDataAPI, getCompaniesAPI, getItemAPI } from '../services/data.js';
 
 const Form = props => {
   const [data, setData] = useState([]);
   const [companies, setCompanies] = useState([]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     getDataAPI().then(response => setData(response));
@@ -17,12 +18,16 @@ const Form = props => {
     getCompaniesAPI().then(response => setCompanies(response));
   }, []);
 
+  useEffect(() => {
+    getItemAPI().then(response => setItems(response));
+  }, []);
+
   const [filteredExpenses, setFilteredExpenses] = useState(data);
   const { filters, setFilter } = useContext(ClothesContext);
 
-  let expenses = data;
-
   useEffect(() => {
+    let expenses = data;
+
     if (filters['gender'] !== '')
       expenses = expenses.filter(
         expense => expense.gender === filters['gender']
@@ -42,7 +47,7 @@ const Form = props => {
       );
 
     setFilteredExpenses(expenses);
-  }, [expenses, filters]);
+  }, [data, filters]);
 
   const changeHandlerMark = event => {
     setFilter('mark', event.target.value);
@@ -55,18 +60,10 @@ const Form = props => {
   const changeHandlerValue = event => {
     setFilter('value', event.target.value);
   };
-  const options = companies.map((company, index) => {
-    return {
-      label: company.name,
-      value: company.name,
-      key: company.id,
-    };
-  });
-
   return (
     <div>
       <div className={classes.form}>
-        <form className={classes['form-items']}>
+        <form>
           <div>
             <div className={classes.buttons}>
               <button
@@ -94,7 +91,7 @@ const Form = props => {
               })}
             </select>
             <select onChange={changeHandlerItem}>
-              {data.map(item => (
+              {items.map(item => (
                 <option key={item.id} value={item.item}>
                   {item.item}
                 </option>
