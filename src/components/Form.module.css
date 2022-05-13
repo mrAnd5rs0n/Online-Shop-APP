@@ -10,10 +10,10 @@
   justify-content: center;
   align-items: center;
   top: 8.7rem;
-  padding-top: 0.3rem;
-  padding-bottom: -20rem;
+ /*  padding-top: -3rem;
+  padding-bottom: -200rem; */
   z-index: 100;
-  margin-left: 20rem;
+  margin-left: 22rem;
 }
 
 select {
@@ -30,7 +30,7 @@ select {
   padding-left: 2px;
   padding-right: 2px;
   margin-top: 0rem;
-  margin-left: 1rem;
+  margin-left: 2.5rem;
 }
 
 .buttons {
@@ -49,7 +49,7 @@ select {
   margin-top: 0.4rem;
   cursor: pointer;
 
-  margin-left: -2rem;
+  margin-left: -8rem;
 }
 
 .searchButton {

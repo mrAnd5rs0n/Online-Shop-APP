@@ -106,7 +106,7 @@ const Form = props => {
           </div>
           <div>
             <button className={classes.searchButton} type="submit">
-              Reset
+            
             </button>
 
             <FilterItem dictKey="gender" value={filters['gender']} />
